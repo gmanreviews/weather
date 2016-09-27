@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "More Weather Details";
+}
+<h2>MoreWeatherDetails</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        @{Html.RenderAction("FiveDayForecast", "Weather", new { id = 1, trim = true });}
+    </div>
+    <div class="col-md-6">
+        @{Html.RenderAction("FiveDayForecast", "Weather", new { id = 2, trim = true });}
+    </div>
+    <div class="col-md-6">
+        @{Html.RenderAction("FiveDayForecast", "Weather", new { id = 3, trim = true });}
+    </div>
+    <div class="col-md-6">
+        @{Html.RenderAction("FiveDayForecast", "Weather", new { id = 4, trim = true });}
+    </div>
+</div>

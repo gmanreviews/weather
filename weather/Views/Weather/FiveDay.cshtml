@@ -1,0 +1,4 @@
+﻿@model int
+@{Html.RenderAction("FiveDayForecast", "Weather", new { id = Model });}
+
+@Html.ActionLink("Back to Short Forecasts", "MoreWeatherDetails", "Home")

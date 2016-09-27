@@ -1,0 +1,68 @@
+﻿@model weather.Models.weather_forecast
+@{  Layout = null; }
+<div class="weather container">
+    @Html.HiddenFor(Model => Model.location.id, new { @class = "location_id" })
+    @{
+        bool is_rainy = false;
+    }
+    <h4>Current Weather for @Html.Raw(Model.location.name)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <table class="table">
+            <tr>
+                <th>
+                    Date/Time
+                </th>
+                <th>
+                    Short Description
+                </th>
+                <th>
+                    Min Temp (F)
+                </th>
+                <th>
+                    Max Temp (F)
+                </th>
+                <th>
+                    Humidity
+                </th>
+            </tr>
+            @foreach (var weather in Model.days_of_weather)
+            {
+                if (!(is_rainy))
+                {
+                    is_rainy = weather.description.ToLower().Contains("rain");
+                }
+
+                <tr>
+                    <td>
+                        @Html.Raw(DateTime.Today)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => weather.description, new { @class = "short_desc today" })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => weather.temp_min)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => weather.temp_max)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => weather.humidity)
+                    </td>
+                </tr>
+            }
+        </table>
+    </dl>
+    @{ 
+        string type = (is_rainy) ? "bad" : "good";
+        string path = HttpContext.Current.Request.Url.AbsolutePath;
+        string from = (path == "/") ? "home" : "more";
+    }
+    @{
+        if (is_rainy)
+        {
+            <div class="rain"></div>
+        }
+    }
+    @Html.ActionLink("Send Notification", "Notification", new { controller = "notification", id = Model.location.id, type = type, from = from })
+</div>
